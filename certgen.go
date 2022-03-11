@@ -126,5 +126,5 @@ func getCert() (string, string) {
 // CLI interface
 func main() {
 	crt, key := getCert()
-	fmt.Print(crt, key)
+	fmt.Print(crt, ", ", key)
 }
