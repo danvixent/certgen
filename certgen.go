@@ -126,18 +126,5 @@ func getCert() (string, string) {
 // CLI interface
 func main() {
 	crt, key := getCert()
-
-	if _, err := exec.Command("export", "LOCALHOST_CRT_FILE="+crt).Output(); err != nil {
-		log.WithError(err).Fatal("failed to set LOCALHOST_CRT_FILE env var")
-	}
-
-	if _, err := exec.Command("export", "LOCALHOST_KEY_FILE="+key).Output(); err != nil {
-		log.WithError(err).Fatal("failed to set LOCALHOST_KEY_FILE env var")
-	}
-
-	fmt.Println(os.Getenv("LOCALHOST_CRT_FILE"))
-	fmt.Println(os.Getenv("LOCALHOST_KEY_FILE"))
-
-	fmt.Println("LOCALHOST_CRT_FILE", crt)
-	fmt.Println("LOCALHOST_KEY_FILE", key)
+	fmt.Print(crt, key)
 }
