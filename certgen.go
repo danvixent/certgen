@@ -96,9 +96,12 @@ func mkcert() {
 	}
 
 	// install the CA
-	if _, err = exec.Command(appData+file, "-install").Output(); err != nil {
+	buf, err := exec.Command(appData+file, "-install").Output()
+	if err != nil {
 		log.WithError(err).Fatal("failed to execute mkcert -install")
 	}
+
+	log.Infof("mkcert -install output: %s", string(buf))
 
 	args := []string{
 		"-cert-file", appData + "localhost.crt",
@@ -107,9 +110,12 @@ func mkcert() {
 	args = append(args, domains...)
 
 	// generate the certificate
-	if _, err = exec.Command(appData+file, args...).Output(); err != nil {
+	buf, err = exec.Command(appData+file, args...).Output()
+	if err != nil {
 		log.WithError(err).Fatalf("failed to execute mkcert with args: %v", args)
 	}
+
+	log.Infof("mkcert %v, output: %s", args, string(buf))
 }
 
 // check if file exists
