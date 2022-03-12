@@ -131,7 +131,7 @@ func getCert() (string, string) {
 	return appData + "localhost.crt", appData + "localhost.key"
 }
 
-var domains = []string{"localhost"}
+var domains = []string{"localhost", "127.0.0.1", "::1"}
 
 // CLI interface
 func main() {
