@@ -71,7 +71,7 @@ func getAppData() string {
 // mkcert to generates certificates
 func mkcert() {
 	// set the right executable according to the system
-	exeURL := "https://github.com/FiloSottile/mkcert/releases/download/v1.2.0/"
+	exeURL := "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/"
 	file := ""
 	switch runtime.GOOS {
 	case "darwin":
