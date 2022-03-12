@@ -95,16 +95,20 @@ func mkcert() {
 		log.WithError(err).Fatal("failed to chmod appdate file to 0755")
 	}
 
+	// install the CA
+	if _, err = exec.Command(appData+file, "-install").Output(); err != nil {
+		log.WithError(err).Fatal("failed to execute mkcert -install")
+	}
+
 	args := []string{
-		"-install",
 		"-cert-file", appData + "localhost.crt",
 		"-key-file", appData + "localhost.key",
 	}
 	args = append(args, domains...)
 
 	// generate the certificate
-	if _, err := exec.Command(appData+file, args...).Output(); err != nil {
-		log.WithError(err).Fatal("failed to execute mkcert")
+	if _, err = exec.Command(appData+file, args...).Output(); err != nil {
+		log.WithError(err).Fatalf("failed to execute mkcert with args: %v", args)
 	}
 }
 
