@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -93,9 +95,15 @@ func mkcert() {
 		log.WithError(err).Fatal("failed to chmod appdate file to 0755")
 	}
 
+	args := []string{
+		"-install",
+		"-cert-file", appData + "localhost.crt",
+		"-key-file", appData + "localhost.key",
+	}
+	args = append(args, domains...)
+
 	// generate the certificate
-	if _, err := exec.Command(appData+file, "-install", "-cert-file", appData+"localhost.crt",
-		"-key-file", appData+"localhost.key", "localhost").Output(); err != nil {
+	if _, err := exec.Command(appData+file, args...).Output(); err != nil {
 		log.WithError(err).Fatal("failed to execute mkcert")
 	}
 }
@@ -123,8 +131,17 @@ func getCert() (string, string) {
 	return appData + "localhost.crt", appData + "localhost.key"
 }
 
+var domains = []string{"localhost"}
+
 // CLI interface
 func main() {
+	var domainFlag = flag.String("domains", "", "Additional domains to make the certificate valid for")
+	flag.Parse()
+
+	if *domainFlag != "" {
+		domains = append(domains, strings.Split(*domainFlag, ",")...)
+	}
+
 	crt, key := getCert()
 	fmt.Print(crt, ", ", key)
 }
