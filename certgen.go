@@ -75,11 +75,11 @@ func mkcert() {
 	file := ""
 	switch runtime.GOOS {
 	case "darwin":
-		file = "mkcert-v1.2.0-darwin-amd64"
+		file = "mkcert-v1.4.3-darwin-amd64"
 	case "linux":
-		file = "mkcert-v1.2.0-linux-amd64"
+		file = "mkcert-v1.4.3-linux-amd64"
 	case "windows":
-		file = "mkcert-v1.2.0-windows-amd64.exe"
+		file = "mkcert-v1.4.3-windows-amd64.exe"
 	default:
 		log.Fatal("Your system is not supported. Sorry.")
 		os.Exit(1)
